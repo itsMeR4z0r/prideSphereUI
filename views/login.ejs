@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="auto">
+<head>
+    <%- include('partials/head'); %>
+    <link href='/stylesheets/login.css' rel="stylesheet">
+</head>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+<%- include('partials/color-mode'); %>
+
+<main class="form-signin w-100 m-auto">
+    <form hx-post="/login"
+          hx-target="#login-results">
+        <img class="mb-4" src="/images/logo.png" alt="" width="72">
+        <h1 class="h3 mb-3 fw-normal">Por favor, faça login</h1>
+        <div id="login-results"></div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com"
+                   required>
+            <label for="floatingInput">Endereço de email</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password"
+                   required>
+            <label for="floatingPassword">Senha</label>
+        </div>
+        <button class="btn btn-primary w-100 py-2">
+            <span class="text-btn">Entrar</span>
+            <span class="spinner-border spinner-border-sm htmx-indicator" aria-hidden="true"></span>
+            <span class="htmx-indicator">Carregando...</span>
+        </button>
+        <p class="mt-5 mb-3 text-body-secondary">PrideSphere - 2023</p>
+    </form>
+</main>
+<%- include('partials/script'); %>
+</body>
+</html>
