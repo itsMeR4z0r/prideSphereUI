@@ -1,0 +1,108 @@
+<div class="d-flex flex-column flex-shrink-0 bg-body-tertiary min-vh-100">
+    <a href="/" class="d-block p-3 link-body-emphasis text-decoration-none" data-bs-toggle="tooltip"
+       data-bs-placement="right" data-bs-original-title="Icon-only">
+        <img class="bi pe-none" src="/images/logo.png" width="40">
+        <span class="fs-5 d-none d-sm-inline">PrideSphere - Admin</span>
+    </a>
+    <ul class="nav nav-pills nav-flush flex-column mb-auto text-center" id="menu">
+        <li class="nav-item"
+            data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-html="true" data-bs-title="<i class='fa-solid fa-house bi pe-none me-2' role='img'></i>Home">
+            <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page">
+                <i class="fs-4 fa-solid fa-house bi pe-none" role="img"></i> <span
+                        class="ms-2 d-none d-sm-inline">Home</span>
+            </a>
+        </li>
+        <li class="nav-item" data-bs-toggle="tooltip" aria-label="Gerenciamento" data-bs-placement="right"
+            data-bs-html="true" data-bs-title="<i class='fa-solid fa-list-check bi pe-none me-2' role='img'></i>Gerenciamento">
+            <a href="#sub-gerenciamento" data-bs-toggle="collapse" class="nav-link py-3 border-bottom rounded-0">
+                <i class="fa-solid fa-chevron-right me-3 collapse-icon d-none d-lg-inline"></i>
+                <i class="fs-4 fa-solid fa-list-check bi pe-none" role="img"></i>
+                <span class="ms-2 d-none d-sm-inline">Gerenciamento</span>
+            </a>
+            <div class="collapse" id="sub-gerenciamento" data-bs-parent="#menu">
+                <ul class="btn-toggle-nav nav p-2 nav-pills flex-column bg-dark bg-opacity-75">
+                    <li class="nav-item p-2"  data-bs-toggle="tooltip" aria-label="Estatísticas de Uso" data-bs-placement="right"
+                        data-bs-html="true" data-bs-title="<i class='fa-solid fa-magnifying-glass-chart bi pe-none me-2' role='img'></i>Estatísticas de Uso">
+                        <a href="#"
+                           hx-target="#dashboard-content" hx-get="/trigger_delay"
+                           class="nav-link link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="fa-solid fa-magnifying-glass-chart bi pe-none"></i>
+                            <span class="ms-2 d-none d-sm-inline">Estatísticas de Uso</span>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2"  data-bs-toggle="tooltip" aria-label="Tipo de Relatos" data-bs-placement="right"
+                        data-bs-html="true" data-bs-title="<i class='fa-solid fa-pen-to-square bi pe-none me-2' role='img'></i>Tipo de Relatos">
+                        <a href="#"
+                           hx-target="#dashboard-content" hx-get="/trigger_delay"
+                           class="nav-link link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="fa-solid fa-pen-to-square bi pe-none"></i>
+                            <span class="ms-2 d-none d-sm-inline">Tipo de Relatos</span>
+                        </a>
+                    </li>
+                    <li class="nav-item p-2" data-bs-toggle="tooltip" aria-label="Usuários Administrativos" data-bs-placement="right"
+                        data-bs-html="true" data-bs-title="<i class='fa-solid fa-users bi pe-none me-2' role='img'></i>Usuários Administrativos">
+                        <a href="#"
+                           hx-target="#dashboard-content" hx-get="/trigger_delay"
+                           class="nav-link link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            <i class="fa-solid fa-users bi pe-none"></i>
+                            <span class="ms-2 d-none d-sm-inline">Usuários Administrativos</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="nav-item" data-bs-html="true"
+            data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Manunten&ccedil;&atilde;o"
+            data-bs-original-title="<i class='fa-solid fa-screwdriver-wrench bi pe-none me-2' role='img'></i>Manunten&ccedil;&atilde;o">
+            <a href="#sub-manuntencao" data-bs-toggle="collapse" class="nav-link py-3 border-bottom rounded-0">
+                <i class="fa-solid fa-chevron-right me-3 collapse-icon d-none d-lg-inline"></i>
+                <i class="fs-4 fa-solid fa-screwdriver-wrench bi pe-none" role="img"
+                   aria-label="Manunten&ccedil;&atilde;o"></i>
+                <span class="ms-2 d-none d-sm-inline">Manunten&ccedil;&atilde;o</span>
+            </a>
+            <div class="collapse" id="sub-manuntencao" data-bs-parent="#menu">
+                <ul class="btn-toggle-nav nav nav-pills p-2 flex-column bg-primary bg-dark bg-opacity-75">
+                    <li class="nav-item" data-bs-toggle="tooltip" aria-label="Status do Servidor" data-bs-placement="right"
+                        data-bs-html="true" data-bs-title="<i class='fa-solid fa-server bi pe-none me-2' role='img'></i>Status do Servidor">
+                        <a class="nav-link link-body-emphasis d-inline-flex text-decoration-none rounded" href="#"
+                           hx-target="#dashboard-content" hx-get="/trigger_delay">
+                            <i class="fa-solid fa-server bi pe-none"></i>
+                            <span class="ms-2 d-none d-sm-inline">Status do Servidor</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" data-bs-toggle="tooltip" aria-label="Reiniciar Servidor" data-bs-placement="right"
+                        data-bs-html="true" data-bs-title="<i class='fa-solid fa-power-off bi pe-none me-2' role='img'></i>Reiniciar Servidor">
+                        <a class="nav-link link-body-emphasis d-inline-flex text-decoration-none rounded text-danger-emphasis"
+                           href="#" hx-target="#dashboard-content" hx-get="/trigger_delay">
+                            <i class="fa-solid fa-power-off bi pe-none"></i>
+                            <span class="ms-2 d-none d-sm-inline">Reiniciar Servidor</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+    <div class="dropdown border-top">
+        <a href="#"
+           class="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none dropdown-toggle"
+           data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
+            <span class="ms-2 d-none d-sm-inline">Isaac (Admin)</span>
+        </a>
+        <ul class="dropdown-menu text-small shadow">
+            <a class="dropdown-item" href="#" hx-target="#dashboard-content" hx-get="/trigger_delay">
+                <i class="fa-solid fa-sliders  bi pe-none me-2"></i>
+                Configura&ccedil;&otilde;es
+            </a>
+            <li>
+                <hr class="dropdown-divider">
+            </li>
+            <li>
+                <a class="dropdown-item text-danger-emphasis" href="#" hx-target="#dashboard-content" hx-get="/login">
+                    <i class="fa-solid fa-right-from-bracket  bi pe-none me-2"></i>
+                    Sair
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
