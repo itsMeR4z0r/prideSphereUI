@@ -3,27 +3,46 @@
 /**
  * Module dependencies.
  */
+require('dotenv').config()
+const app = require('../app');
+const debug = require('debug')('pridesphereui:server');
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
 
-var app = require('../app');
-var debug = require('debug')('pridesphereui:server');
-var http = require('http');
+const options = {
+  key: fs.readFileSync('/home/isaac/localhost-key.pem'),
+  cert: fs.readFileSync('/home/isaac/localhost.pem')
+};
 
+const options2 = {
+  key: fs.readFileSync('/home/isaac/192.168.15.21-key.pem'),
+  cert: fs.readFileSync('/home/isaac/192.168.15.21.pem')
+};
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
 var server = http.createServer(app);
+var serverhttps = https.createServer(options,app);
+var serverhttps2 = https.createServer(options2,app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
+serverhttps.listen(8443);
+serverhttps.on('error', onError);
+serverhttps.on('listening', onListening);
+
+serverhttps2.listen(8449);
+serverhttps2.on('error', onError);
+serverhttps2.on('listening', onListening);
 
 server.listen(port);
 server.on('error', onError);

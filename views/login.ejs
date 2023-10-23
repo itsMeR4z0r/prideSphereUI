@@ -8,22 +8,16 @@
 <%- include('partials/color-mode'); %>
 
 <main class="form-signin w-100 m-auto">
-    <form hx-post="/login"
-          hx-target="#login-results">
+    <form>
         <img class="mb-4" src="/images/logo.png" alt="" width="72">
         <h1 class="h3 mb-3 fw-normal">Por favor, faça login</h1>
         <div id="login-results"></div>
         <div class="form-floating">
-            <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com"
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
                    required>
-            <label for="floatingInput">Endereço de email</label>
+            <label for="email">Endereço de email</label>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password"
-                   required>
-            <label for="floatingPassword">Senha</label>
-        </div>
-        <button class="btn btn-primary w-100 py-2">
+        <button type="button" class="btn btn-primary w-100 py-2" onclick="login();">
             <span class="text-btn">Entrar</span>
             <span class="spinner-border spinner-border-sm htmx-indicator" aria-hidden="true"></span>
             <span class="htmx-indicator">Carregando...</span>
@@ -31,6 +25,24 @@
         <p class="mt-5 mb-3 text-body-secondary">PrideSphere - 2023</p>
     </form>
 </main>
+
+<div class="modal" id="qrcodeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validar Acesso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="qrcode" alt="QR-Code" width="256">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <%- include('partials/script'); %>
+<script src="/javascripts/login.js"></script>
 </body>
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="auto">
+<head>
+    <%- include('partials/head'); %>
+    <link href='/stylesheets/login.css' rel="stylesheet">
+</head>
+<body>
+<style>
+    #qr-reader {
+        overflow: hidden;
+    }
+    #qr-reader > video{
+        width: 100% !important;
+        height: auto !important;
+    }
+    .modal-content {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0%);
+    }
+</style>
+<input type="hidden" id="requestId" value="<%=requestId%>">
+<div class="modal modal-sheet position-static d-block bg-body-secondary p-4 py-md-5" tabindex="-1" role="dialog"
+     id="modalTour">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content rounded-3 shadow" id="modalContent">
+            <div class="modal-body p-4 text-center">
+                <h5 class="mb-0"><%= typeof qrCodetitle != 'undefined' ? qrCodetitle : '' %></h5>
+                <div class="row">
+                    <div id="qr-reader" class="col-12 mt-3 mb-2">
+                    </div>
+                </div>
+<!--                <div class="row">-->
+<!--                    <label for="selectCamera">Selecione a c&acirc;mera</label>-->
+<!--                    <select class="form-select" id="selectCamera" onchange="changeCamera();" aria-label="Selecione a c&acirc;mera">-->
+<!--                    </select>-->
+<!--                </div>-->
+            </div>
+            <div class="modal-footer flex-nowrap p-0">
+                <button onclick="cancel();" type="button"
+                        class="btn btn-lg btn-link fs-6 text-decoration-none col-12 py-3 m-0 rounded-0 border-end">
+                    <strong>Cancelar</strong></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="qr-reader-results"></div>
+<%- include('partials/script'); %>
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="/javascripts/qrCodeReader.js"></script>
+</body>
+</html>

@@ -8,6 +8,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const dashboardRouter = require('./routes/dashboard');
+const qrCodeRouter = require('./routes/qrcode');
 const bodyParser = require("express");
 
 const app = express();
@@ -27,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/qrcode', qrCodeRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
