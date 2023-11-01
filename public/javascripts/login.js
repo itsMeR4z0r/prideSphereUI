@@ -46,6 +46,11 @@ function checkLogin() {
             if (response.success) {
                 clearInterval(timer);
                 window.location.href = "/dashboard";
+            }else{
+                if(response.error == 'requisicao ja usada'){
+                    clearInterval(timer);
+                    // window.location.reload();
+                }
             }
         }
     });
