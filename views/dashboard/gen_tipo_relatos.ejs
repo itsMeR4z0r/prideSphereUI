@@ -1,0 +1,130 @@
+<div class="container mt-3">
+    <p class="h1">Controle de Tipos de Relatos</p>
+    <hr>
+    <button class="btn btn-outline-primary mb-3" data-bs-toggle="modal" data-bs-target="#cadastrarModal">Adicionar Tipo de Relato</button>
+    <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link  active" id="positivo-tab" data-bs-toggle="tab" href="#positivo" role="tab"
+               aria-controls="positivo" aria-selected="true">Positivo</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="negativo-tab" data-bs-toggle="tab" href="#negativo" role="tab"
+               aria-controls="negativo" aria-selected="false">Negativo</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="positivo" role="tabpanel" aria-labelledby="positivo-tab">
+            <!-- Conteúdo da Aba Positivo -->
+            <div class="mt-3">
+                <h1 class="display-6">Relato Positivo</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-1 text-center border-end" scope="col">#</th>
+                        <th class="col-9" scope="col">Tipo de Relato</th>
+                        <th class="col-2 text-center border-start" scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th class="col-1 text-center align-middle border-end" scope="row">1</th>
+                        <td class="col-9 align-middle">Exemplo de Relato Positivo</td>
+                        <td class="col-2 text-center border-start p-3">
+                            <button class="btn btn-outline-warning btn-sm">Editar</button>
+                            <button class="btn btn-outline-danger btn-sm">Remover</button>
+                        </td>
+                    </tr>
+                    <!-- Outros itens podem ser adicionados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="negativo" role="tabpanel" aria-labelledby="negativo-tab">
+            <!-- Conteúdo da Aba Negativo -->
+            <div class="mt-3">
+                <h1 class="display-6">Relato Negativo</h1>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="col-1 text-center border-end" scope="col">#</th>
+                        <th class="col-9" scope="col">Tipo de Relato</th>
+                        <th class="col-2 text-center border-start" scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th class="col-1 text-center align-middle border-end" scope="row">1</th>
+                        <td class="col-9 align-middle">Exemplo de Relato Negativo</td>
+                        <td class="col-2 text-center border-start p-3">
+                            <button class="btn btn-outline-warning btn-sm">Editar</button>
+                            <button class="btn btn-outline-danger btn-sm">Remover</button>
+                        </td>
+                    </tr>
+                    <!-- Outros itens podem ser adicionados aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="cadastrarModal" tabindex="-1" data-bs-backdrop="static"  aria-labelledby="cadastrarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cadastrarModalLabel">Cadastrar Tipo de Relato</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="tipoRelato" class="col-form-label">Tipo de Relato:</label>
+                        <input type="text" class="form-control" id="tipoRelato">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-primary">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="editarModal" tabindex="-1" data-bs-backdrop="static"  aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Tipo de Relato</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="tipoRelatoEdit" class="col-form-label">Tipo de Relato:</label>
+                        <input type="text" class="form-control" id="tipoRelatoEdit">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-primary">Salvar Alterações</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="removerModal" tabindex="-1" data-bs-backdrop="static"  aria-labelledby="removerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removerModalLabel">Confirmar Remoção</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja remover este tipo de relato?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-outline-danger">Remover</button>
+            </div>
+        </div>
+    </div>
+</div>

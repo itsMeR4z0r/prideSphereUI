@@ -43,7 +43,6 @@ function qrCodeSuccessCallback(qrCodeMessage) {
         type: "POST", url: "/qrcode/validate",
         data: data,
         success: function (response) {
-            console.log(response)
             if (response.success) {
                 $('modalContent').html('<div class="alert alert-success" role="alert">QRCode validado com sucesso</div>');
                 html5QrCode.stop();

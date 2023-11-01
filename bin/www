@@ -9,15 +9,16 @@ const debug = require('debug')('pridesphereui:server');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-
 const options = {
-  key: fs.readFileSync('/home/isaac/localhost-key.pem'),
-  cert: fs.readFileSync('/home/isaac/localhost.pem')
+  key: fs.readFileSync('rootSSL.key'),
+  cert: fs.readFileSync('rootSSL.pem'),
+  passphrase: '2242092'
 };
 
 const options2 = {
-  key: fs.readFileSync('/home/isaac/192.168.15.21-key.pem'),
-  cert: fs.readFileSync('/home/isaac/192.168.15.21.pem')
+  key: fs.readFileSync('rootSSL.key'),
+  cert: fs.readFileSync('10.147.17.100.pem'),
+  passphrase: '2242092'
 };
 /**
  * Get port from environment and store in Express.
@@ -32,7 +33,6 @@ var port = normalizePort(process.env.PORT || '3000');
 var server = http.createServer(app);
 var serverhttps = https.createServer(options,app);
 var serverhttps2 = https.createServer(options2,app);
-
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -92,6 +92,7 @@ function onError(error) {
       process.exit(1);
       break;
     default:
+      console.error(error);
       throw error;
   }
 }
