@@ -36,6 +36,7 @@ function startCamera() {
 startCamera();
 
 function qrCodeSuccessCallback(qrCodeMessage) {
+    html5QrCode.pause();
     const data = {
         qrCodeMessage: qrCodeMessage, requestId: document.getElementById('requestId').value
     };
@@ -43,11 +44,15 @@ function qrCodeSuccessCallback(qrCodeMessage) {
         type: "POST", url: "/qrcode/validate",
         data: data,
         success: function (response) {
-            console.log(response)
             if (response.success) {
-                $('modalContent').html('<div class="alert alert-success" role="alert">QRCode validado com sucesso</div>');
+                $('#modalContent').html('<div class="alert alert-success" role="alert">QRCode validado com sucesso</div>');
+                $("#modalContent > div.modal-body.p-4.text-center").html("<h3>Login realizado com sucesso! <br> pode fechar a aba</h3>");
+                $("#modalContent > div.modal-footer.flex-nowrap.p-0").hide();
                 html5QrCode.stop();
                 html5QrCode.clear();
+            }else{
+                alert(!!response.error ? response.error : "Requisicao Invalida")
+                html5QrCode.resume();
             }
         }
     });

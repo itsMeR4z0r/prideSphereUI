@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="pt-br" data-bs-theme="auto">
+<html lang="pt-br" data-bs-theme="light">
 <head>
     <%- include('partials/head', {title: 'Home'}); %>
-    <link href='/stylesheets/dashboard.css' rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet'/>
+    <link href='/stylesheets/index.css' rel="stylesheet">
 </head>
-<body >
-
+<body class="vh-100" data-bs-theme="light">
+<div class="clearfix p-2" style="position: relative;z-index: 4">
+    <div class="float-start col-4">
+        <div class="form-floating rounded-5 shadow-lg border-2 border-dark border-opacity-25">
+            <input type="text" class="form-control rounded-5" id="pesquisaInput"
+                   placeholder="Pesquisa">
+            <label class="ms-5 ps-3" for="pesquisaInput">Pesquisa</label>
+            <button id="btnPesquisar" class="btn rounded-5 border-0"><i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+</div>
+<div id='map'></div>
+<div class="logo"><a href="/"><img class="" src="/images/logo_horizontal.png" alt="" width="256"></a></div>
 <%- include('partials/script'); %>
+<script src="/javascripts/index.js"></script>
 </body>
 </html>

@@ -8,7 +8,8 @@
 <%- include('partials/color-mode'); %>
 
 <main class="form-signin w-100 m-auto">
-    <form>
+    <form onsubmit="login(this);">
+        <input type="hidden" id="requestID" value="<%=sessionId%>">
         <img class="mb-4" src="/images/logo.png" alt="" width="72">
         <h1 class="h3 mb-3 fw-normal">Por favor, faça login</h1>
         <div id="login-results"></div>

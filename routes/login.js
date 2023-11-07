@@ -2,15 +2,26 @@ const express = require('express');
 const router = express.Router();
 const utils = require('../utils');
 const http = require('http');
+const { v4 } = require('uuid');
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-
-    res.render('login', {
-        title: 'Express'
+    if(req.isAuthenticated()) {
+            return res.redirect('/dashboard');
+    }
+    return res.render('login', {
+        title: 'Express',
+        sessionId: v4(),
     });
 });
-
+router.get('/logout', function (req, res, next) {
+    req.logout(err => {
+        if (err) { return res.json({ success: false, message: 'Logout failed' }); }
+        req.session.destroy(() => {
+            res.redirect('/login')
+        });
+    });
+});
 router.post('/', function (req, res, next) {
     if (!req.body.email) {
         res.json({error: 'Invalid Credentials'});
@@ -41,6 +52,7 @@ router.post('/', function (req, res, next) {
 
         res2.on("end", function () {
             const body = Buffer.concat(chunks);
+            console.log(body)
             const decrypted = util.decrypt(body.toString());
             const data = JSON.parse(decrypted);
             if (data.error) {

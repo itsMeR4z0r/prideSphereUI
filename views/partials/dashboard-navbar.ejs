@@ -33,7 +33,7 @@
                     <li class="nav-item p-2"  data-bs-toggle="tooltip" aria-label="Tipo de Relatos" data-bs-placement="right"
                         data-bs-html="true" data-bs-title="<i class='fa-solid fa-pen-to-square bi pe-none me-2' role='img'></i>Tipo de Relatos">
                         <a href="#"
-                           hx-target="#dashboard-content" hx-get="/trigger_delay"
+                           hx-target="#dashboard-content" hx-get="dashboard/tipoRelatos"
                            class="nav-link link-body-emphasis d-inline-flex text-decoration-none rounded">
                             <i class="fa-solid fa-pen-to-square bi pe-none"></i>
                             <span class="ms-2 d-none d-sm-inline">Tipo de Relatos</span>
@@ -86,8 +86,8 @@
         <a href="#"
            class="d-flex align-items-center justify-content-center p-3 link-body-emphasis text-decoration-none dropdown-toggle"
            data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="24" height="24" class="rounded-circle">
-            <span class="ms-2 d-none d-sm-inline">Isaac (Admin)</span>
+            <img src="<%=user.picture%>" alt="mdo" width="32" height=32 class="rounded-circle">
+            <span class="ms-2 d-none d-sm-inline"><%=user.nickname%></span>
         </a>
         <ul class="dropdown-menu text-small shadow">
             <a class="dropdown-item" href="#" hx-target="#dashboard-content" hx-get="/trigger_delay">
@@ -98,7 +98,7 @@
                 <hr class="dropdown-divider">
             </li>
             <li>
-                <a class="dropdown-item text-danger-emphasis" href="#" hx-target="#dashboard-content" hx-get="/login">
+                <a class="dropdown-item text-danger-emphasis" href="/login/logout">
                     <i class="fa-solid fa-right-from-bracket  bi pe-none me-2"></i>
                     Sair
                 </a>
