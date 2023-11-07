@@ -9,101 +9,99 @@ const debug = require('debug')('pridesphereui:server');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-
+const ngrok = require('ngrok');
 const options = {
-  key: fs.readFileSync('/home/isaac/localhost-key.pem'),
-  cert: fs.readFileSync('/home/isaac/localhost.pem')
+    key: fs.readFileSync('/home/isaac/localhost-key.pem'), cert: fs.readFileSync('/home/isaac/localhost.pem')
 };
 
 const options2 = {
-  key: fs.readFileSync('/home/isaac/192.168.15.21-key.pem'),
-  cert: fs.readFileSync('/home/isaac/192.168.15.21.pem')
+    key: fs.readFileSync('/home/isaac/192.168.15.21-key.pem'), cert: fs.readFileSync('/home/isaac/192.168.15.21.pem')
 };
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
+(async function () {
+    const url = await ngrok.connect({authtoken: process.env.NGORK_TOKEN, port: port);
+    console.log(url);
+})
+    ();
+    /**
+     * Create HTTP server.
+     */
 
-/**
- * Create HTTP server.
- */
+    var server = http.createServer(app);
+    var serverhttps = https.createServer(options, app);
+    var serverhttps2 = https.createServer(options2, app);
 
-var server = http.createServer(app);
-var serverhttps = https.createServer(options,app);
-var serverhttps2 = https.createServer(options2,app);
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+    serverhttps.listen(8443);
+    serverhttps.on('error', onError);
+    serverhttps.on('listening', onListening);
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-serverhttps.listen(8443);
-serverhttps.on('error', onError);
-serverhttps.on('listening', onListening);
+    serverhttps2.listen(8449);
+    serverhttps2.on('error', onError);
+    serverhttps2.on('listening', onListening);
 
-serverhttps2.listen(8449);
-serverhttps2.on('error', onError);
-serverhttps2.on('listening', onListening);
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+    /**
+     * Normalize a port into a number, string, or false.
+     */
 
-/**
- * Normalize a port into a number, string, or false.
- */
+    function normalizePort(val) {
+        var port = parseInt(val, 10);
 
-function normalizePort(val) {
-  var port = parseInt(val, 10);
+        if (isNaN(port)) {
+            // named pipe
+            return val;
+        }
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+        if (port >= 0) {
+            // port number
+            return port;
+        }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+        return false;
+    }
 
-  return false;
-}
+    /**
+     * Event listener for HTTP server "error" event.
+     */
 
-/**
- * Event listener for HTTP server "error" event.
- */
+    function onError(error) {
+        if (error.syscall !== 'listen') {
+            throw error;
+        }
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+        var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+        // handle specific listen errors with friendly messages
+        switch (error.code) {
+            case 'EACCES':
+                console.error(bind + ' requires elevated privileges');
+                process.exit(1);
+                break;
+            case 'EADDRINUSE':
+                console.error(bind + ' is already in use');
+                process.exit(1);
+                break;
+            default:
+                throw error;
+        }
+    }
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
+    /**
+     * Event listener for HTTP server "listening" event.
+     */
 
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+    function onListening() {
+        var addr = server.address();
+        var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+        debug('Listening on ' + bind);
+    }
