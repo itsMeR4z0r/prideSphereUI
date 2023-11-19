@@ -3,41 +3,123 @@
 /**
  * Module dependencies.
  */
+
 require('dotenv').config()
 const app = require('../app');
 const debug = require('debug')('pridesphereui:server');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
-const ngrok = require('ngrok');
+const Utils = require("../utils");
+
 const options = {
-  key: fs.readFileSync('rootSSL.key'),
-  cert: fs.readFileSync('rootSSL.pem'),
-  passphrase: '2242092'
+    key: fs.readFileSync('rootSSL.key'), cert: fs.readFileSync('rootSSL.pem'), passphrase: '2242092'
 };
 
 const options2 = {
-  key: fs.readFileSync('rootSSL.key'),
-  cert: fs.readFileSync('10.147.17.100.pem'),
-  passphrase: '2242092'
+    key: fs.readFileSync('rootSSL.key'), cert: fs.readFileSync('10.147.17.100.pem'), passphrase: '2242092'
 };
+
 /**
  * Get port from environment and store in Express.
  */
+const port = normalizePort(process.env.PORT || '3000');
 
-var port = normalizePort(process.env.PORT || '3000');
-(async function () {
-    const url = await ngrok.connect({authtoken: process.env.NGORK_TOKEN, port: port);
-    console.log(url);
-})
-    ();
-    /**
-     * Create HTTP server.
-     */
+
+function updateUIUrl(url) {
+    console.log('ngrok url: ' + url);
+    process.env.URLUI = url;
+
+    let util = new Utils();
+
+    let data = {
+        key: process.env.KEY_VALIDATION, url: url
+    };
+
+    let encrypted = util.encrypt(JSON.stringify(data));
+    const options = {
+        "method": "POST", "hostname": process.env.API_HOST, "port": process.env.API_PORT, "path": "/util/updateUIUrl"
+    };
+
+    const req2 = http.request(options, function (res2) {
+        const chunks = [];
+        res2.on("data", function (chunk) {
+            chunks.push(chunk);
+        });
+        res2.on("end", function () {
+            const body = Buffer.concat(chunks);
+            const decrypted = util.decrypt(body.toString());
+            const data = JSON.parse(decrypted);
+            if (data.error) {
+                console.error(data.error);
+            } else {
+                console.log(data.message);
+            }
+        });
+
+    });
+    req2.write(JSON.stringify({data: encrypted}));
+    req2.end();
+}
+
+
+// setup ngrok
+const ngrok = require("@ngrok/ngrok");
+// import ngrok from '@ngrok/ngrok' // if inside a module
+ngrok.consoleLog("INFO"); // turn on info logging
+
+builder = new ngrok.SessionBuilder();
+builder
+    .authtokenFromEnv()
+    .metadata("Online in One Line")
+    .clientInfo("PrideSphere", "1.0")
+    .handleStopCommand(() => {
+        process.exit(0);
+        console.log("stop command");
+    })
+    .handleRestartCommand(() => {
+        console.log("restart command");
+    })
+    .handleUpdateCommand((update) => {
+        console.log("update command, version:", update.version, "permitMajorVersion:", update.permitMajorVersion);
+    })
+    .handleHeartbeat((latency) => {
+        console.log("heartbeat, latency:", latency, "milliseconds");
+    })
+    .handleDisconnection((addr, error) => {
+        console.log("disconnected, addr:", addr, "error:", error);
+    });
+let sessionNgork = null;
+    builder.connect().then((session) => {
+        sessionNgork = session;
+            session
+        .httpEndpoint()
+        .compression()
+        .domain("guppy-electric-penguin.ngrok-free.app")
+        .metadata("PrideShpere UI")
+        .listen()
+        .then((listener) => {
+            console.log("Ingress established at:", listener.url());
+            updateUIUrl(listener.url());
+            listener.forward('localhost:' + port);
+        });
+});
+process.on('exit', function (code) {
+   if(sessionNgork) {
+       sessionNgork.close().then(() => {
+           return console.log(`Process to exit with code ${code}`);
+       });
+   }else {
+       return console.log(`Process to exit with code ${code}`);
+   }
+});
+/**
+ * Create HTTP server.
+ */
 
 var server = http.createServer(app);
-var serverhttps = https.createServer(options,app);
-var serverhttps2 = https.createServer(options2,app);
+var serverhttps = https.createServer(options, app);
+var serverhttps2 = https.createServer(options2, app);
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -58,19 +140,19 @@ server.on('listening', onListening);
  */
 
 function normalizePort(val) {
-  var port = parseInt(val, 10);
+    var port = parseInt(val, 10);
 
-  if (isNaN(port)) {
-    // named pipe
-    return val;
-  }
+    if (isNaN(port)) {
+        // named pipe
+        return val;
+    }
 
-  if (port >= 0) {
-    // port number
-    return port;
-  }
+    if (port >= 0) {
+        // port number
+        return port;
+    }
 
-  return false;
+    return false;
 }
 
 /**
@@ -78,28 +160,26 @@ function normalizePort(val) {
  */
 
 function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
+    if (error.syscall !== 'listen') {
+        throw error;
+    }
 
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+    var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      console.error(error);
-      throw error;
-  }
+    // handle specific listen errors with friendly messages
+    switch (error.code) {
+        case 'EACCES':
+            console.error(bind + ' requires elevated privileges');
+            process.exit(1);
+            break;
+        case 'EADDRINUSE':
+            console.error(bind + ' is already in use');
+            process.exit(1);
+            break;
+        default:
+            console.error(error);
+            throw error;
+    }
 }
 
 /**
@@ -107,9 +187,7 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+    var addr = server.address();
+    var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+    debug('Listening on ' + bind);
 }

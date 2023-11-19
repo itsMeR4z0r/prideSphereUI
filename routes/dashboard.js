@@ -1,28 +1,16 @@
 var express = require('express');
 const Utils = require("../utils");
+const http = require("http");
 var router = express.Router();
-
+const util = new Utils();
 /* GET users listing. */
-router.get('/',function(req, res, next) {
+router.get('/', function (req, res, next) {
     if (!req.isAuthenticated()) {
         res.redirect('/');
     }
-    res.render('dashboard', { title: 'Express', user: req.user});
+    res.render('dashboard', {title: 'Express', user: req.user});
 });
 
-router.post('/',function(req, res, next) {
-    if(req.isAuthenticated) {
-        res.render('dashboard', { title: 'Express' });
-    } else {
-        res.redirect('/');
-    }
-});
-
-router.get('/tipoRelatos', (req,res) => {
-    if (!req.isAuthenticated()) {
-        res.redirect('/');
-    }
-    res.render('dashboard/gen_tipo_relatos');
-});
+router.use('/tipoRelatos', require('./dashboard/tipoRelatos'));
 
 module.exports = router;
